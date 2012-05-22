@@ -34,6 +34,16 @@ can_ok('Foo', $_) for @moose_exports;
 
 ok(!Foo->can($_), '... Foo can no longer do ' . $_) for @moose_exports;
 
+my $va_ret;
+{
+    package Foo::Va;
+    use Moose;
+    $va_ret = eval 'vamoose';
+}
+ok($va_ret, 'vamoose returns true');
+ok(!Foo::Va->can($_), 'Foo::Va can no longer do ' . $_) for @moose_exports;
+
+
 # and check the type constraints as well
 
 my @moose_type_constraint_exports = qw(

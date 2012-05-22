@@ -122,12 +122,17 @@ sub augment {
     $meta->add_augment_method_modifier( $name => $method );
 }
 
+sub vamoose {
+    goto &unimport;
+    # XXX - can't see how to make unimport work AND return true
+}
+
 Moose::Exporter->setup_import_methods(
     with_meta => [
         qw( extends with has before after around override augment )
     ],
     as_is => [
-        qw( super inner ),
+        qw( super inner vamoose ),
         \&Carp::confess,
         \&Scalar::Util::blessed,
     ],
@@ -850,8 +855,8 @@ create an attribute trait.
 =head2 B<unimport>
 
 Moose offers a way to remove the keywords it exports, through the C<unimport>
-method. You simply have to say C<no Moose> at the bottom of your code for this
-to work. Here is an example:
+method. You simply have to say C<no Moose> or C<vamoose> at the bottom of your
+code for this to work. Here is an example:
 
     package Person;
     use Moose;
@@ -864,7 +869,8 @@ to work. Here is an example:
         $self->first_name . ' ' . $self->last_name
     }
 
-    no Moose; # keywords are removed from the Person package
+    vamoose; # keywords are removed from the Person package
+    # returns true, so you don't need the final "1;"
 
 =head1 EXTENDING AND EMBEDDING MOOSE
 

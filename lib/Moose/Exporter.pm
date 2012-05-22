@@ -669,6 +669,7 @@ sub _make_unimport_sub {
             $export_recorder,
             $is_reexport,
         );
+	return 1; # offered for final value in calling package
     };
 }
 

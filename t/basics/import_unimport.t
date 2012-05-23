@@ -42,6 +42,7 @@ my $va_ret;
 }
 ok($va_ret, 'vamoose returns true');
 ok(!Foo::Va->can($_), 'Foo::Va can no longer do ' . $_) for @moose_exports;
+ok(Foo::Va->meta->is_immutable, 'Foo::Va no longer mutable');
 
 
 # and check the type constraints as well

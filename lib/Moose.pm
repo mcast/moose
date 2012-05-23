@@ -123,6 +123,8 @@ sub augment {
 }
 
 sub vamoose {
+    my $pkg = caller();
+    $pkg->meta->make_immutable;
     goto &unimport;
     # XXX - can't see how to make unimport work AND return true
 }
@@ -869,7 +871,9 @@ code for this to work. Here is an example:
         $self->first_name . ' ' . $self->last_name
     }
 
-    vamoose; # keywords are removed from the Person package
+    vamoose;
+    # Keywords are removed from the Person package
+    # Class is made immutable, like  __PACKAGE__->meta->make_immutable
     # returns true, so you don't need the final "1;"
 
 =head1 EXTENDING AND EMBEDDING MOOSE

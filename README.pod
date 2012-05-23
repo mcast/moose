@@ -1,0 +1,65 @@
+=head1 WHAT IS THIS FORK?
+
+This fork expresses the idea of using a new sugar keyword C<vamoose>
+to do necessary (or commonly advised) things at the end of a class.
+
+The common postamble
+
+ __PACKAGE__->meta->is_immutable;
+ no Moose;
+ # or, no Moose::Role;
+ 1;
+
+has been considered by some [who? </wikipedia>] to be a shortcoming of
+L<Moose>.  The replacement offered is
+
+ vamoose;
+
+to perform the same operations.
+
+=head1 PROBLEMS
+
+=over 4
+
+=item * First, this is a fork of the L<Moose> project itself.  It is
+stated under L<Moose::Manual::Contributing/NEW FEATURES>,
+
+=over 4
+
+I<At this stage, no new features will even be considered for addition
+into the core without first being vetted as a MooseX module, unless it
+is absolutely 100% impossible to implement the feature outside the
+core.>
+
+=back
+
+=item * This C<vamoose> only works for L<Moose>.
+
+It should also work for L<Moose::Role>,
+L<Moose::Util::TypeConstraints> and any others.
+
+=item * To allow the compile-time speed optimisation of not making
+classes immutable.
+
+I have heard there is a trade-off for classes which are instantiated
+only a few times, in short-lived applications.  I have not
+demonstrated this for myself, nor attempted to find the break-even
+point.
+
+=item * Changes return value for all L<Moose::Exporter/unimport>
+calls.
+
+=back
+
+=head2 What's next?
+
+A load-once-per-codebase module in the L<MooseX::Sugar::*> namespace
+seems appropriate.  I suspect it may need to do something horrible to
+L<Moose::Exporter>.
+
+I'll leave this branch on Github for a while.  I would be surprised if
+anyone merged it.
+
+=head2 Timeframe
+
+As and when/ probably maybe.
